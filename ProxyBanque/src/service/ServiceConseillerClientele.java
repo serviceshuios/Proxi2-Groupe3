@@ -298,4 +298,10 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 		return idao.listerClient(idConseiller);
 	}
 
+	@Override
+	public Client chercherClient(int idClient) {
+		
+		return idao.chercherClient(idClient);
+	}
+
 }

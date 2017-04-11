@@ -35,8 +35,9 @@ public interface IServiceConseillerClientele {
 	 *            ville
 	 * @param telephone
 	 *            telephone
-	 * @param typeClient PARTICULIER ou ENTREPRISE
-	 *            
+	 * @param typeClient
+	 *            PARTICULIER ou ENTREPRISE
+	 * 
 	 * @return Client
 	 */
 	public Client creerClient(String nom, String prenom, String adresse, int codePostal, String ville, String telephone,
@@ -119,7 +120,6 @@ public interface IServiceConseillerClientele {
 	 * @return chaine decaractère liste des information client
 	 */
 	public String lireInfoClient(Client client);
-
 
 	/**
 	 * modifie dans le cas d'un particulier le nom du client
@@ -226,11 +226,20 @@ public interface IServiceConseillerClientele {
 	 */
 	public void ajouterPlacementAuPatrimoineClient(Client client, Placement placement)
 			throws ClientNonEligibleException;
+
 	/**
 	 * liste les clients d'un conseiller
+	 * 
 	 * @param idConseiller
 	 * @return Liste des clients du conseiller
 	 */
 	public List<Client> listerClients(int idConseiller);
+
+	/**
+	 * retrouve un client à partir de son id
+	 * @param idClient
+	 * @return
+	 */
+	public Client chercherClient(int idClient);
 
 }
