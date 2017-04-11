@@ -21,7 +21,7 @@ public class DaoConnexion {
 				// 1-Charger le pilote
 				Class.forName(PILOTE);
 				// 2-Creer la connexion
-				Connection conn = DriverManager.getConnection(URL, USER, PWD);
+			conn = DriverManager.getConnection(URL, USER, PWD);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
