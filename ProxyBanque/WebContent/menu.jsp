@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <div class="menu">
 	<ul>
-		<li><a href=index.html>Accueil</a></li>
-		<li><a href=Authentification>Authentification</a></li>
+		<li><a href="/">Accueil</a></li> <!-- renvoit à l'index -->
+		<li><a href=Authentification>Authentification</a></li><!-- renvoit à la page d'autentification -->
 
 	</ul>
 

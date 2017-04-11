@@ -28,7 +28,9 @@ public class Dao implements IDao {
 			// 4-Executer la requete
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
-			if (rs != null) {
+			
+			
+			if (rs.next()) {
 				cc = new ConseillerClientele();
 				cc.setIdConseiller(rs.getInt("IdConseiller"));
 				cc.setNom(rs.getString("Nom"));

@@ -12,11 +12,12 @@
 <%@ include file="/menu.jsp" %>
 
 <div class="content">
-	<c:if test="${ sessionScope.droits } = CONSEILLER">
+	<c:if test="${ !empty sessionScope.droits }">
 		<p>
 			Bonjour "${ sessionScope.prenom }" "${ sessionScope.nom }" </br>
 			Vous êtes connectés en tant que conseiller.
 		</p>
+		<p><a href="Authentification?action=deconnecter">Se déconnecter</a></p>
 		
 	</c:if>
 
