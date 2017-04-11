@@ -42,11 +42,19 @@ public class Authentification extends HttpServlet {
 		IAuthentificationService ica = new AuthentificationService();
 		
 		
-		//si la page à été appelée depuis authentifier
-		if (action.equals("authentifier")){
+		//si pas de parametre action on 
+		if (action == null){
+			//on forward à la jsp authentification
+			request.getRequestDispatcher("/authentification.jsp").forward(request, response);
+		}
 		
-			if (login == null || mdp == null){
-				//TODO erreur saisie invalide
+		//si la page à été appelée depuis authentifier
+		else if (action.equals("authentifier")){
+		
+			if (login.equals("") || mdp.equals("")){
+				//ajout d'un message d'erreur et forward à la jsp erreur
+				request.setAttribute("msgErreur","Saisie incorrecte");
+				request.getRequestDispatcher("/erreur.jsp").forward(request, response);
 				
 			}
 			else{
