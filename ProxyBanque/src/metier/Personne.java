@@ -35,6 +35,11 @@ public class Personne {
 	 * numero de telephone de la personne
 	 */
 	protected String telephone;
+	/**
+	 * email dela personne
+	 */
+	protected String email;
+	
 	
 	/**
 	 * Constructeur par defaut de la classe Personne
@@ -107,6 +112,12 @@ public class Personne {
 	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	@Override
 	public String toString() {
