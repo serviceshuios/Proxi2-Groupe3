@@ -89,10 +89,8 @@ public class Dao implements IDao {
 	public void ajouterConseiller(ConseillerClientele cc, String login, String mdp) {
 		try {
 			Connection conn = DaoConnexion.getConnection();
-			PreparedStatement ps = conn.prepareStatement(
-					"INSERT INTO conseiller(Nom, Prenom, Adresse, "
-							+ "CodePostal, Ville, Telephone, Email, Login, MotDePasse) " 
-							+ "VALUES (?,?,?,?,?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO conseiller(Nom, Prenom, Adresse, "
+					+ "CodePostal, Ville, Telephone, Email, Login, MotDePasse) " + "VALUES (?,?,?,?,?,?,?,?,?)");
 			ps.setString(1, cc.getNom());
 			ps.setString(2, cc.getPrenom());
 			ps.setString(3, cc.getAdresse());
@@ -111,5 +109,66 @@ public class Dao implements IDao {
 			// 6-Fermer la connexion
 			DaoConnexion.closeConnection();
 		}
+	}
+
+	@Override
+	public void modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
+			String ville, String telephone) {
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			// 3-Creer la requete
+			PreparedStatement ps = conn.prepareStatement(
+					"UPDATE client SET Nom =? , Prenom = ?, Adresse = ? , CodePostal = ?, Ville= ?, Telephone = ?, Email = ?, where IdClient = ?");
+			ps.setString(1, nom);
+			ps.setString(2, prenom);
+			ps.setString(3, adresse);
+			ps.setInt(4, codepostal);
+			ps.setString(5, ville);
+			ps.setString(6, telephone);
+			ps.setString(7, email);
+			ps.setInt(8, id);
+			// 4-Executer la requete
+			ps.executeUpdate();
+			// 5-Presenter les resultats
+			// 6-Fermer la connexion
+			conn.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			// code qui est executé quelles que soient les étapes précédentes
+			// 6-Fermer la connexion
+			DaoConnexion.closeConnection();
+		}
+	}
+
+	@Override
+	public Client chercherClient(int id) {
+		Client c = new Client();
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			// 3-Creer la requete
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM client WHERE IdClient = ?");
+			ps.setInt(1, id);
+			// 4-Executer la requete
+			ResultSet rs = ps.executeQuery();
+			// 5-Presenter les resultats
+			rs.next();
+			c.setIdClient(rs.getInt("IdClient"));
+			c.setNom(rs.getString("Nom"));
+			c.setPrenom(rs.getString("Prenom"));
+			c.setAdresse(rs.getString("Adresse"));
+			c.setCodePostal(rs.getInt("CodePostal"));
+			c.setVille(rs.getString("Ville"));
+			c.setTelephone(rs.getString("Telephone"));
+			c.setEmail(rs.getString("Email"));
+			c.setTypeClient(rs.getString("TypeClient"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DaoConnexion.closeConnection();
+		}
+		return c;
 	}
 }
