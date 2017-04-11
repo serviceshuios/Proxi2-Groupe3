@@ -55,8 +55,10 @@ public class Personne {
 	 * @param codePostal code postal de la personne
 	 * @param ville ville de la personne
 	 * @param telephone numero de telephone de la personne
+	 * @param email email de la personne
 	 */
-	public Personne(String nom, String prenom, String adresse, int codePostal, String ville, String telephone) {
+	public Personne(String nom, String prenom, String adresse, int codePostal, String ville, String telephone,
+			String email) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -64,6 +66,7 @@ public class Personne {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.telephone = telephone;
+		this.email = email;
 	}
 	/**
 	 * Constructeur surchargé de la classe Personne

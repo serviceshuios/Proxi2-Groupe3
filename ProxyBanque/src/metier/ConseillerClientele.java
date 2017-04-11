@@ -87,10 +87,9 @@ public class ConseillerClientele extends Personne {
 	 * @param telephone
 	 *            telephone
 	 */
-
-	public ConseillerClientele(String nom, String prenom, String adresse, int codePostal, String ville, String telephone) {
-		super(nom, prenom, adresse, codePostal, ville, telephone);
-		// TODO Auto-generated constructor stub
+	public ConseillerClientele(String nom, String prenom, String adresse, int codePostal, String ville,
+			String telephone, String email) {
+		super(nom, prenom, adresse, codePostal, ville, telephone, email);
 	}
 
 	/**

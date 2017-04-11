@@ -3,10 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import metier.Client;
 import metier.ConseillerClientele;
@@ -19,17 +17,15 @@ public class Dao implements IDao {
 		ConseillerClientele cc = null;
 		try {
 			Connection conn = DaoConnexion.getConnection();
-			PreparedStatement ps = conn.prepareStatement(
-					"SELECT conseiller.IdConseiller, Nom, Prenom, Adresse, CodePostal, Ville, Telephone, Email "
-							+ "FROM conseiller, personne WHERE conseiller.IdPersonne = personne.IdPersonne "
-							+ "and  Login=? and MotDePasse=? ");
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT IdConseiller, Nom, Prenom, Adresse, CodePostal, Ville, Telephone, Email "
+							+ "FROM conseiller WHERE Login=? and MotDePasse=? ");
 			ps.setString(1, login);
 			ps.setString(2, motDePasse);
 			// 4-Executer la requete
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
-			
-			
+
 			if (rs.next()) {
 				cc = new ConseillerClientele();
 				cc.setIdConseiller(rs.getInt("IdConseiller"));
@@ -53,14 +49,13 @@ public class Dao implements IDao {
 	}
 
 	@Override
-	public Collection<Client> listerClient(int IdConseiller) {
-		Collection<Client> cl = new ArrayList<Client>();
+	public List<Client> listerClient(int IdConseiller) {
+		List<Client> cl = new ArrayList<Client>();
 		try {
 			Connection conn = DaoConnexion.getConnection();
 			PreparedStatement ps = conn.prepareStatement(
-					"SELECT client.IdClient, TypeClient, Nom, Prenom, Adresse, CodePostal, Ville, Telephone, Email "
-							+ "FROM client, personne WHERE client.IdPersonne = personne.IdPersonne "
-							+ "and client.IdConseiller=? ");
+					"SELECT IdClient, TypeClient, Nom, Prenom, Adresse, CodePostal, Ville, Telephone, Email "
+							+ "FROM client WHERE IdConseiller=? ");
 			ps.setInt(1, IdConseiller);
 			// 4-Executer la requete
 			ResultSet rs = ps.executeQuery();
@@ -94,9 +89,10 @@ public class Dao implements IDao {
 	public void ajouterConseiller(ConseillerClientele cc, String login, String mdp) {
 		try {
 			Connection conn = DaoConnexion.getConnection();
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO personne(Nom, Prenom, Adresse, "
-					+ "CodePostal, Ville, Telephone, Email) " + "VALUES (?,?,?,?,?,?,?)",
-					Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = conn.prepareStatement(
+					"INSERT INTO conseiller(Nom, Prenom, Adresse, "
+							+ "CodePostal, Ville, Telephone, Email, Login, MotDePasse) " 
+							+ "VALUES (?,?,?,?,?,?,?,?,?)");
 			ps.setString(1, cc.getNom());
 			ps.setString(2, cc.getPrenom());
 			ps.setString(3, cc.getAdresse());
@@ -104,26 +100,9 @@ public class Dao implements IDao {
 			ps.setString(5, cc.getVille());
 			ps.setString(6, cc.getTelephone());
 			ps.setString(7, cc.getEmail());
-
-			int affectedRows = ps.executeUpdate();
-
-			if (affectedRows == 0) {
-				throw new SQLException("Creating user failed, no rows affected.");
-			}
-
-			ResultSet generatedKeys = ps.getGeneratedKeys();
-			if (generatedKeys.next()) {
-				int idpersonne = (int) generatedKeys.getLong(1);
-
-				PreparedStatement ps2 = conn.prepareStatement(
-						"INSERT INTO conseiller(Login, MotDePasse)" + "VALUES (?,?) WHERE conseiller.IdPersonne=?");
-				ps2.setString(1, login);
-				ps2.setString(2, mdp);
-				ps2.setInt(3, idpersonne);
-				ps2.executeUpdate();
-			} else {
-				throw new SQLException("Creating user failed, no ID obtained.");
-			}
+			ps.setString(8, login);
+			ps.setString(9, mdp);
+			ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
