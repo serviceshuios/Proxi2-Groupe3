@@ -3,6 +3,8 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.Dao;
+import dao.IDao;
 import metier.CarteBancaire;
 import metier.Client;
 import metier.Compte;
@@ -19,6 +21,9 @@ import service.exception.MontantNegatifException;
 import service.exception.SoldeInsuffisantException;
 
 public class ServiceConseillerClientele implements IServiceConseillerClientele {
+	
+	private IDao idao = new Dao();
+	
 
 	@Override
 	public Client creerClient(String nom, String prenom, String adresse, int codePostal, String ville, String telephone,
@@ -288,6 +293,12 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 			client.getPatrimoine().getPlacements().add(placement);
 		}
 
+	}
+
+	@Override
+	public List<Client> listerClients(int idConseiller) {
+		
+		return idao.listerClient(idConseiller);
 	}
 
 }

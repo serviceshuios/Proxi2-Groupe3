@@ -3,15 +3,19 @@
 <ul>
 	<li><a href="/ProxyBanque/">Accueil</a></li>
 	<!-- renvoit à l'index -->
-	<li>
-	<c:if test="${ empty sessionScope.droits }">
-	<a href=Authentification>Authentification</a>
-	</c:if>
-	<c:if test="${ sessionScope.droits =='CONSEILLER' }">
-	<a href="Authentification?action=deconnecter">Deconnection</a>
-	</c:if>
-	
+	<li><c:if test="${ empty sessionScope.droits }">
+			<a href=Authentification>Authentification</a>
+		</c:if> <c:if test="${ sessionScope.droits =='CONSEILLER' }">
+			<a href="Authentification?action=deconnecter">Deconnection</a>
+		</c:if>
 	</li>
 	<!-- renvoit à la page d'autentification -->
+	
+	<c:if test="${ sessionScope.droits =='CONSEILLER' }">
+	
+	<li><a href=GestionClient?action=ListerClient>Liste des clients</a></li>
+	<li><a href=GestionClient?action=EditerClient>Editer un client</a></li>
+			
+	</c:if>
 
 </ul>

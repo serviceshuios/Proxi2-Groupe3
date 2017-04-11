@@ -3,6 +3,8 @@
  */
 package service;
 
+import java.util.List;
+
 import metier.*;
 import service.exception.AssociationInvalideException;
 import service.exception.ClientNonEligibleException;
@@ -224,5 +226,11 @@ public interface IServiceConseillerClientele {
 	 */
 	public void ajouterPlacementAuPatrimoineClient(Client client, Placement placement)
 			throws ClientNonEligibleException;
+	/**
+	 * liste les clients d'un conseiller
+	 * @param idConseiller
+	 * @return Liste des clients du conseiller
+	 */
+	public List<Client> listerClients(int idConseiller);
 
 }
