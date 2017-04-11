@@ -13,13 +13,18 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 titre">
-				<%@ include file="/titre.jsp"%>
+				<%@ include file="/WEB-INF/titre.jsp"%>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 connection">
+				<%@ include file="/WEB-INF/connectioninf.jsp"%>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 menu">
-				<%@ include file="/menu.jsp"%>
+				<%@ include file="/WEB-INF/menu.jsp"%>
 			</div>
 
 			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 content">
@@ -36,7 +41,7 @@
 
 				<c:if test="${ sessionScope.droits =='CONSEILLER' }">
 
-					<form method="post" action="GestionClient?action=modifier">
+					<form method="post" action="GestionClient?action=Modifier">
 						<fieldset>
 							<legend>Modifier informations client</legend>
 							<label for="idClient">Id : </label><input type="text" name="idClient" id="idClient" value="${client.idClient }"/><br />
@@ -49,13 +54,19 @@
 							<label for="telephone">Téléphone : </label><input type="text" name="telephone" id="telephone" value="${client.telephone }"/><br />
 												
 							<label for="typeClient">Type de client :</label>
-							<input type="radio" name="typeClient" id="typeClient" value="PARTICULIER" ${ client.typeClient=='PARTICULIER' ? "checked" : "" }>Particulier</input>
-							<input type="radio" name="typeClient" id="typeClient" value="ENTREPRISE" ${ client.typeClient=='ENTREPRISE' ? "checked" : "" }>Entreprise</input><br/>
+							<input type="radio" name="typeClient" id="typeClient" value="PARTICULIER" ${ client.typeClient=='PARTICULIER' ? "checked" : "" }/><span>Particulier</span>
+							<input type="radio" name="typeClient" id="typeClient" value="ENTREPRISE" ${ client.typeClient=='ENTREPRISE' ? "checked" : "" }/><span>Entreprise</span><br/>
 							<label for="idConseiller">Id Conseiller : </label><input type="text" name="idConseiller" id="idConseiller" value="${sessionScope.idConseiller}"/><br />
 							
 						</fieldset>
 						<br /> <input type="submit" value="Modifier" />
 					</form>
+					
+					<c:if test="${ modified }">
+					<p>Le client à été modifé.
+					</p>
+					</c:if>
+					
 				</c:if>
 
 
@@ -66,7 +77,7 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer">
-				<%@ include file="/footer.jsp"%>
+				<%@ include file="/WEB-INF/footer.jsp"%>
 			</div>
 		</div>
 

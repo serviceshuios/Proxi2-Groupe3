@@ -55,7 +55,7 @@ public class GestionClient extends HttpServlet {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 		
-		//on verifie que l'utilisateur à les droits CONSEILLER
+		//on verifie que l'utilisateur à les droits CONSEILLER, si ce n'est pas le cas on sort en erreur
 		else if (!droits.equals("CONSEILLER")){
 			
 			request.setAttribute("msgErreur","Vous n'avez pas les droits pour effectuer cette action, veuillez vous identifier");
@@ -100,12 +100,70 @@ public class GestionClient extends HttpServlet {
 		//effectue la modification d'un client
 		else if (action.equals("Modifier")){
 			
-			//TODO
+			//recuperation des parametres
+			String strIdClient = request.getParameter("idClient");
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String adresse = request.getParameter("adresse");
+			String ville = request.getParameter("ville");
+			String strCp = request.getParameter("cp");
+			int cp = strCp.equals("") ? 0 : Integer.parseInt(strCp);
+			String email = request.getParameter("email");
+			String telephone = request.getParameter("telephone");
+			
+			//non utlisisée pour le moment
+			String typeClient = request.getParameter("typeClient");
+			int idCons = Integer.parseInt(request.getParameter("idConseiller"));
+			
+			//si pas d'id passé en paramètre on envoi la page d'erreur
+			if (strIdClient == null || strIdClient.equals("")){
+				
+				request.setAttribute("msgErreur","Aucun client n'a été sélectionné pour la modification");
+				//on forward à la jsp erreur
+				request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+				
+			}
+			
+			else {
+				
+				int idClient = Integer.parseInt(strIdClient);
+				
+				//si aucun enregistrement ne correspond en base on envoi la page d'erreur
+				if (icc.chercherClient(idClient) == null){
+					
+					request.setAttribute("msgErreur","L'identifiant di client spécifié ne correspond à aucun enregistrement.");
+					//on forward à la jsp erreur
+					request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+					
+				}
+				//si tout est bon on fait le traitement
+				else {
+					
+					icc.modifierClient(idClient, nom, prenom, email, adresse, cp, ville, telephone);
+					
+					//on recupère le client modifié
+					Client client = icc.chercherClient(idClient);
+					//on le retransmet à la requete
+					request.setAttribute("client",client);
+					//on met un booleen à true pour notifier de la modification
+					request.setAttribute("modified",true);
+					//on forward à la jsp editerClient
+					request.getRequestDispatcher("/editerClient.jsp").forward(request, response);
+					
+				}
+
+				
+			}
+			
+			
+			
+			
+			
 			
 		}
 		
 		else {
-			System.out.println("test");
+
 			//dans les autres cas on forward à la jsp index
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}

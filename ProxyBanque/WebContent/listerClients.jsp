@@ -13,20 +13,25 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 titre">
-				<%@ include file="/titre.jsp"%>
+				<%@ include file="/WEB-INF/titre.jsp"%>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 connection">
+				<%@ include file="/WEB-INF/connectioninf.jsp"%>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 menu">
-				<%@ include file="/menu.jsp"%>
+				<%@ include file="/WEB-INF/menu.jsp"%>
 			</div>
 
 			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 content">
 
 				<p>Bonjour ${ sessionScope.prenom } ${ sessionScope.nom }, voici
 					la liste de vos clients</p>
-				<p>
+				
 				<table>
 					<tr>
 						<th>ID</th>
@@ -58,14 +63,13 @@
 					</c:forEach>
 
 				</table>
-				</p>
 
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer">
-				<%@ include file="/footer.jsp"%>
+				<%@ include file="/WEB-INF/footer.jsp"%>
 			</div>
 		</div>
 
