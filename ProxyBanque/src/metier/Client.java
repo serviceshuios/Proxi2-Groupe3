@@ -9,7 +9,7 @@ package metier;
  *
  */
 public class Client extends Personne {
-	
+
 	/**
 	 * identifiant du client
 	 */
@@ -38,6 +38,10 @@ public class Client extends Personne {
 	 * sert à distinguer les particuliers des entreprises "PARTICULIER" ou "ENTREPRISE"
 	 */
 	private String typeClient; 
+	
+	public Client() {
+		super();
+	}
 	
 	/**
 	 * Constructeur surchargé
@@ -105,6 +109,8 @@ public class Client extends Personne {
 	public void setIdClient(int idClient) {
 		this.idClient = idClient;
 	}
+	
+	
 
 	@Override
 	public String toString() {
