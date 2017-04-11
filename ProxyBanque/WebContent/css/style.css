@@ -41,3 +41,11 @@ a{
 	
 	font-weight: bold;
 }
+
+tr{
+	border: 1px solid black;
+}
+
+td, th{
+	padding: 0.1em 1em 0.1em 1em;
+}

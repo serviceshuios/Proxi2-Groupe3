@@ -64,23 +64,27 @@ public class GestionClient extends HttpServlet {
 			
 		}
 		
-		else if (action == "listerClient"){
+		else if (action.equals("ListerClients")){
 			
 			//on recupère la listre des clients
 			List<Client> clients = icc.listerClients(idConseiller);
 			//on l'ajoute à la requete
 			request.setAttribute("clients", clients);
+			
+
+			
 			//on passe à la jsp listerClients
 			request.getRequestDispatcher("/listerClients.jsp").forward(request, response);
 			
 		}
-		else if (action == "modifierClient"){
+		else if (action.equals("modifierClient")){
 			
 			//TODO
 			
 		}
 		
 		else {
+			System.out.println("test");
 			//dans les autres cas on forward à la jsp index
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}

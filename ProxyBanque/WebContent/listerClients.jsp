@@ -24,6 +24,9 @@
 
 			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 content">
 
+				<p>Bonjour ${ sessionScope.prenom } ${ sessionScope.nom }, voici
+					la liste de vos clients</p>
+				<p>
 				<table>
 					<tr>
 						<th>ID</th>
@@ -43,14 +46,19 @@
 							<td>${ client.prenom }</td>
 							<td>${ client.telephone }</td>
 							<td>${ client.email }</td>
-							<td><a href=GestionCompte?action=Lister&idClient=${client.idClient}>Liste des comptes</a></td>
-							<td><a href=GestionCompte?action=Virement&idClient=${client.idClient}>Virements</a></td>
-							<td><a href=GestionCompte?action=Editer&idClient=${client.idClient}>Editer</a></td>
+							<td><a
+								href=GestionCompte?action=Lister&idClient=${client.idClient}>Liste
+									des comptes</a></td>
+							<td><a
+								href=GestionCompte?action=Virement&idClient=${client.idClient}>Virements</a></td>
+							<td><a
+								href=GestionCompte?action=Editer&idClient=${client.idClient}>Editer</a></td>
 
 						</tr>
 					</c:forEach>
 
 				</table>
+				</p>
 
 			</div>
 		</div>

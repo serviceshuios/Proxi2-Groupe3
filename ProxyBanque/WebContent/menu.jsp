@@ -13,7 +13,7 @@
 	
 	<c:if test="${ sessionScope.droits =='CONSEILLER' }">
 	
-	<li><a href=GestionClient?action=ListerClient>Liste des clients</a></li>
+	<li><a href=GestionClient?action=ListerClients>Liste des clients</a></li>
 	<li><a href=GestionClient?action=EditerClient>Editer un client</a></li>
 			
 	</c:if>
