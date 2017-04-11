@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div class="menu">
-	<ul>
-		<li><a href="/">Accueil</a></li> <!-- renvoit à l'index -->
-		<li><a href=Authentification>Authentification</a></li><!-- renvoit à la page d'autentification -->
+<ul>
+	<li><a href="/ProxyBanque/">Accueil</a></li>
+	<!-- renvoit à l'index -->
+	<li>
+	<c:if test="${ empty sessionScope.droits }">
+	<a href=Authentification>Authentification</a>
+	</c:if>
+	<c:if test="${ sessionScope.droits =='CONSEILLER' }">
+	<a href="Authentification?action=deconnecter">Deconnection</a>
+	</c:if>
+	
+	</li>
+	<!-- renvoit à la page d'autentification -->
 
-	</ul>
-
-</div>
+</ul>

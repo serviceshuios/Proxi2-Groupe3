@@ -4,36 +4,66 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/bootstrap.min.css" />
 <title>ProxyBanque Authentification</title>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<%@ include file="/menu.jsp" %>
+	<div class="container-fluid">
 
-<div class="content">
-	<c:if test="${ !empty sessionScope.droits }">
-		<p>
-			Bonjour "${ sessionScope.prenom }" "${ sessionScope.nom }" </br>
-			Vous êtes connectés en tant que conseiller.
-		</p>
-		<p><a href="Authentification?action=deconnecter">Se déconnecter</a></p>
-		
-	</c:if>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 titre">
+				<%@ include file="/titre.jsp"%>
+			</div>
+		</div>
 
-	<c:if test="${ empty sessionScope.droits }">
-	
-	<form method="post" action="Authentification?action=authentifier">
-		<fieldset id="section-1">
-			<legend>Authentification</legend>
-			<label for="login">Login : </label><input type="text" name="login"
-				id="login" /><br /> <label for="mdp">Mot de passe : </label><input
-				type="password" name="mdp" id="mdp" /><br />
-		</fieldset>
-		<br /> <input type="submit" value="valider" />
-	</form>
-	</c:if>
-</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 menu">
+				<%@ include file="/menu.jsp"%>
+			</div>
 
+			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 content">
+				<c:if test="${ sessionScope.droits =='CONSEILLER' }">
+					<p>
+						Bonjour ${ sessionScope.prenom } ${ sessionScope.nom }</br> Vous êtes
+						connectés en tant que conseiller.
+					</p>
+					<p>
+						<a href="Authentification?action=deconnecter">Se déconnecter</a>
+					</p>
+
+				</c:if>
+
+				<c:if test="${ empty sessionScope.droits }">
+
+					<form method="post" action="Authentification?action=authentifier">
+						<fieldset id="section-1">
+							<legend>Authentification</legend>
+							<label for="login">Login : </label><input type="text"
+								name="login" id="login" /><br /> <label for="mdp">Mot
+								de passe : </label><input type="password" name="mdp" id="mdp" /><br />
+						</fieldset>
+						<br /> <input type="submit" value="valider" />
+					</form>
+				</c:if>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer">
+				<%@ include file="/footer.jsp"%>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+
+	<script type="js/bootstrap.min.js"></script>
 </body>
 </html>

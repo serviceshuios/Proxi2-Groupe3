@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+.titre {
+	background-color: blue;
+}
+
+.menu {
+	background-color: yellow;
+}
+
+.content {
+	background-color: pink;
+}
+
+.footer {
+	background-color: green;
+	font-style: italic;
+	color: gray;
+}
+
+form input{
+	width: 300px;
+	height: 20px;
+	padding: 5px 0px 5px 10px;
+}
+
+form label{
+	display: inline-block;
+	width: 150px;
+	padding: 5px 0px 5px 10px;
+}
+
+form input[type="submit"]{
+	width: 150px;
+	height: 30px;
+	margin: 5px 0px 30px 50px;
+}
+
+
+a{
+	
+	font-weight: bold;
+}

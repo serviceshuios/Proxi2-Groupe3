@@ -5,13 +5,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/bootstrap.min.css" />
-<title>Erreur</title>
+<link rel="stylesheet" href="css/style.css" />
+<title>TODO</title>
 </head>
 <body>
+	<div class="container-fluid">
 
-<%@ include file="/menu.jsp" %>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 titre">
+				<%@ include file="/titre.jsp"%>
+			</div>
+		</div>
 
-<p> "${ msgErreur }"</p>
+		<div class="row">
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 menu">
+				<%@ include file="/menu.jsp"%>
+			</div>
 
+			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 content">
+				<p>Erreur : ${ msgErreur }</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer">
+			<%@ include file="/footer.jsp"%>
+		</div>
+	</div>
+
+	</div>
 </body>
 </html>
