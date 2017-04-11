@@ -304,4 +304,10 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 		return idao.chercherClient(idClient);
 	}
 
+	@Override
+	public void modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
+			String ville, String telephone) {
+		idao.modifierClient(id, nom, prenom, email, adresse, codepostal, ville, telephone);
+	}
+
 }

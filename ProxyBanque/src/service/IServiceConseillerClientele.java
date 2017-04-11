@@ -241,5 +241,19 @@ public interface IServiceConseillerClientele {
 	 * @return
 	 */
 	public Client chercherClient(int idClient);
+	
+	/**
+	 * Modifie le client dont l'id est spécifié avec de nouveaux paramètres
+	 * @param id
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param adresse
+	 * @param codepostal
+	 * @param ville
+	 * @param telephone
+	 */
+	public void modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
+			String ville, String telephone);
 
 }
