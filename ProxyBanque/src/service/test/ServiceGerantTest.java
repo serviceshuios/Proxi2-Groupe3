@@ -81,14 +81,14 @@ public class ServiceGerantTest {
 		ConseillerClientele cc2 = new ConseillerClientele();
 		ConseillerClientele cc3 = new ConseillerClientele();
 
-		Client ceOk = new Client("nom", "prenom", "adresse", 00000, "ville", "telephone", "ENTREPRISE");
+		Client ceOk = new Client("nom", "prenom", "adresse", 00000, "ville", "telephone", "ENTREPRISE", "toto");
 		Client ceAlerte = new Client("nom", "prenom", "adresse", 00000, "ville",
-				"telephone","ENTREPRISE");
-		Client cpOk = new Client("OK", "particulier", "adresse", 00000, "ville", "telephone", "PARTICULIER");
-		Client cpAlerte = new Client("alerte", "particulier", "adresse", 00000, "ville", "telephone", "PARTICULIER");
+				"telephone","ENTREPRISE", "toto");
+		Client cpOk = new Client("OK", "particulier", "adresse", 00000, "ville", "telephone", "PARTICULIER", "toto");
+		Client cpAlerte = new Client("alerte", "particulier", "adresse", 00000, "ville", "telephone", "PARTICULIER", "toto");
 
 		Client cpSansCompte = new Client("SansCompte", "particulier", "adresse", 00000, "ville",
-				"telephone","PARTICULIER");
+				"telephone","PARTICULIER", "toto");
 
 		// affectation des comptes aux clients
 
@@ -153,12 +153,12 @@ public class ServiceGerantTest {
 		ConseillerClientele cc2 = new ConseillerClientele();
 		ConseillerClientele cc3 = new ConseillerClientele();
 
-		Client ceOk = new Client("nom", "prenom", "adresse", 00000, "ville", "telephone", "ENTREPRISE");
+		Client ceOk = new Client("nom", "prenom", "adresse", 00000, "ville", "telephone", "ENTREPRISE", "toto");
 
-		Client cpOk = new Client("OK", "particulier", "adresse", 00000, "ville", "telephone", "PARTICULIER");
+		Client cpOk = new Client("OK", "particulier", "adresse", 00000, "ville", "telephone", "PARTICULIER", "toto");
 
 		Client cpSansCompte = new Client("SansCompte", "particulier", "adresse", 00000, "ville",
-				"telephone", "PARTICULIER");
+				"telephone", "PARTICULIER", "toto");
 
 		// affectation des comptes aux clients
 

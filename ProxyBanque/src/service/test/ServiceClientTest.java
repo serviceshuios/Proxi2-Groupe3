@@ -26,7 +26,7 @@ public class ServiceClientTest {
 	@Before
 	public void before() {
 		sc = new ServiceClient();
-		c = new Client(null, null, null, 0, null, null, null);
+		c = new Client(null, null, null, 0, null, null, null, null);
 	}
 
 	@Test

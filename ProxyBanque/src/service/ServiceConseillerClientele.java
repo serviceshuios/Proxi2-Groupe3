@@ -21,15 +21,14 @@ import service.exception.MontantNegatifException;
 import service.exception.SoldeInsuffisantException;
 
 public class ServiceConseillerClientele implements IServiceConseillerClientele {
-	
+
 	private IDao idao = new Dao();
-	
 
 	@Override
 	public Client creerClient(String nom, String prenom, String adresse, int codePostal, String ville, String telephone,
-			String typeClient) {
+			String email, String typeClient) {
 		// On crait un client particulier
-		Client ccp = new Client(nom, prenom, adresse, codePostal, ville, telephone, typeClient);
+		Client ccp = new Client(nom, prenom, adresse, codePostal, ville, telephone, email, typeClient);
 		return ccp;
 	}
 
@@ -85,13 +84,12 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 			} else {
 				// Si le compte épargne existe déjà on envoit une exception
 				throw new AssociationInvalideException("Le compte épargne existe déjà");
-				
+
 			}
 		}
 
 		// On test le type de compte
-		if (compte instanceof CompteCourant)
-		{
+		if (compte instanceof CompteCourant) {
 			// On test si le client à déjà un compte courant ou pas
 			if (client.getCompteCourant() == null)
 
@@ -99,7 +97,7 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 				// On réalise l'association Client - Compte courant
 				client.setCompteCourant((CompteCourant) compte);
 				// On réalise l'association Compte - Client
-				compte.setClient(client); 
+				compte.setClient(client);
 			} else {
 				// Si le compte courant existe déjà on envoit une exception
 				throw new AssociationInvalideException("Le compte courant existe déjà");
@@ -130,7 +128,7 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 											// courant
 			compteCourant.setCb(cb); // Association entre compte courant et cb
 		} else {
-			throw new AssociationInvalideException("La carte est dejà associée à un compte"); 
+			throw new AssociationInvalideException("La carte est dejà associée à un compte");
 		}
 
 	}
@@ -285,11 +283,10 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 	@Override
 	public void ajouterPlacementAuPatrimoineClient(Client client, Placement placement)
 			throws ClientNonEligibleException {
-		//test si un patrimoine a été déclaré pour le client
-		if(client.getPatrimoine() == null){
+		// test si un patrimoine a été déclaré pour le client
+		if (client.getPatrimoine() == null) {
 			throw new ClientNonEligibleException("Les droits à la gestion du patrimoine n'ont pas été ouverts");
-		}
-		else {
+		} else {
 			client.getPatrimoine().getPlacements().add(placement);
 		}
 
@@ -297,7 +294,7 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 
 	@Override
 	public List<Client> listerClients(int idConseiller) {
-		
+
 		return idao.listerClient(idConseiller);
 	}
 

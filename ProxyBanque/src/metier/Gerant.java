@@ -48,9 +48,8 @@ public class Gerant extends Personne {
 	 *            numero de telephone
 	 */
 	public Gerant(String nom, String prenom, String adresse, int codePostal, String ville, String telephone,
-			String email, int idGerant) {
+			String email) {
 		super(nom, prenom, adresse, codePostal, ville, telephone, email);
-		this.idGerant = idGerant;
 	}
 
 	/**

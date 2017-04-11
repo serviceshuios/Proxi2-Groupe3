@@ -39,8 +39,8 @@ public interface IServiceConseillerClientele {
 	 *            
 	 * @return Client
 	 */
-	public Client creerClient(String nom, String prenom, String adresse, int codePostal, String ville,
-			String telephone, String typeClient);
+	public Client creerClient(String nom, String prenom, String adresse, int codePostal, String ville, String telephone,
+			String email, String typeClient);
 
 	/**
 	 * Associe un conseiller avec un client

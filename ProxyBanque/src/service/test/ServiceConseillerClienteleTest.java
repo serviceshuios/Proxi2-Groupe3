@@ -21,7 +21,7 @@ public class ServiceConseillerClienteleTest {
 	@Test(expected = ClientNonEligibleException.class)
 	public void testouvrirDroitPatrimoineClientMontantInferieur() throws ClientNonEligibleException {
 		
-		Client c = new Client(null, null, null, 0, null, null, null); 	
+		Client c = new Client(null, null, null, 0, null, null, null, null); 	
 		CompteCourant cc = new CompteCourant(0,0.0f,null,0.0f);
 		c.setCompteCourant(cc);
 		ServiceConseillerClientele p =new ServiceConseillerClientele();
@@ -35,7 +35,7 @@ public class ServiceConseillerClienteleTest {
 	@Test
 	public void testouvrirDroitPatrimoineClientMontantSuperieur() throws ClientNonEligibleException {
 		
-		Client c = new Client(null, null, null, 0, null, null, null); 	
+		Client c = new Client(null, null, null, 0, null, null, null, null); 	
 		CompteCourant cc = new CompteCourant(0,1000000f,null,0.0f);
 		c.setCompteCourant(cc);
 		ServiceConseillerClientele p =new ServiceConseillerClientele();
