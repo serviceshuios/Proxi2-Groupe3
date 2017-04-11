@@ -77,7 +77,28 @@ public class GestionClient extends HttpServlet {
 			request.getRequestDispatcher("/listerClients.jsp").forward(request, response);
 			
 		}
-		else if (action.equals("modifierClient")){
+		//accès à la page de modification
+		else if (action.equals("Editer")){
+
+			//on initialise la variable client qui sera passée à la jsp
+			Client client = null;
+			
+			//on recupère le parametre idClient s'il existe
+			String strIdClient = request.getParameter("idClient");
+			
+			//si un client à été passé en paramètre on le retrouve et on l'ajoute à la requete
+			if (strIdClient != null){
+				int idClient = Integer.parseInt(strIdClient);
+				client = icc.chercherClient(idClient);
+				request.setAttribute("client", client);
+			}
+			
+			//on forword à la jsp editer client
+			request.getRequestDispatcher("/editerClient.jsp").forward(request, response);
+			
+		}
+		//effectue la modification d'un client
+		else if (action.equals("Modifier")){
 			
 			//TODO
 			

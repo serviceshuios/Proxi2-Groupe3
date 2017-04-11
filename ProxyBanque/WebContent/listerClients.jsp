@@ -52,7 +52,7 @@
 							<td><a
 								href=GestionCompte?action=Virement&idClient=${client.idClient}>Virements</a></td>
 							<td><a
-								href=GestionCompte?action=Editer&idClient=${client.idClient}>Editer</a></td>
+								href=GestionClient?action=Editer&idClient=${client.idClient}>Editer</a></td>
 
 						</tr>
 					</c:forEach>

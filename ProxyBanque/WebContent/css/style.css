@@ -6,10 +6,12 @@
 
 .menu {
 	background-color: yellow;
+	padding-top: 10px;
 }
 
 .content {
 	background-color: pink;
+	padding-top: 10px;
 }
 
 .footer {
@@ -36,6 +38,10 @@ form input[type="submit"]{
 	margin: 5px 0px 30px 50px;
 }
 
+form input[type=radio]{
+	height: 20px;
+	width: 50px;
+}
 
 a{
 	

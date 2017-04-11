@@ -27,7 +27,7 @@
 				<c:if test="${ sessionScope.droits =='CONSEILLER' }">
 					<p>
 						Bonjour ${ sessionScope.prenom } ${ sessionScope.nom }</br> Vous êtes
-						connectés en tant que conseiller.
+						connecté en tant que conseiller.
 					</p>
 					<p>
 						<a href="Authentification?action=deconnecter">Se déconnecter</a>
