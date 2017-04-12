@@ -310,4 +310,36 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 		idao.modifierClient(id, nom, prenom, email, adresse, codepostal, ville, telephone);
 	}
 
+	@Override
+	public CompteEpargne chercherCompteEpargne(int idClient) {
+		
+		return idao.chercherCompteEpargne(idClient);
+	}
+
+	@Override
+	public CompteCourant chercherCompteCourant(int idClient) {
+		
+		return idao.chercherCompteCourant(idClient);
+	}
+
+	@Override
+	public List<Compte> chercherComptes(int idClient) {
+		
+		List<Compte> comptes = new ArrayList<Compte>();
+		
+		CompteCourant cc = idao.chercherCompteCourant(idClient);
+		CompteEpargne ce = idao.chercherCompteEpargne(idClient);
+		
+		if (cc != null){
+			comptes.add(cc);
+		}
+		if (ce != null){
+			comptes.add(ce);
+		}
+		
+		return comptes;
+	}
+	
+	
+
 }

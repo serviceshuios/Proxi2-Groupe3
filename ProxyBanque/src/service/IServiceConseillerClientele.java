@@ -256,4 +256,26 @@ public interface IServiceConseillerClientele {
 	public void modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
 			String ville, String telephone);
 
+	/**
+	 * renvoi le compte Epargne d'un client s'il existe ou null dans le cas contraire
+	 * @param idClient
+	 * @return
+	 */
+	public CompteEpargne chercherCompteEpargne(int idClient);
+	
+	/**
+	 * renvoi le compte Courant d'un client s'il existe ou null dans le cas contraire
+	 * @param idClient
+	 * @return
+	 */
+	public CompteCourant chercherCompteCourant(int idClient);
+	
+	/**
+	 * renvoi la liste des comptes d'un client
+	 * @param idClient
+	 * @return
+	 */
+	public List<Compte> chercherComptes(int idClient);
+	
+	
 }

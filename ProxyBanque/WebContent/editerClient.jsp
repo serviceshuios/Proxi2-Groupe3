@@ -53,11 +53,13 @@
 							<label for="email">E-mail : </label><input type="text" name="email" id="email" value="${client.email }"/><br />
 							<label for="telephone">Téléphone : </label><input type="text" name="telephone" id="telephone" value="${client.telephone }"/><br />
 												
+							<!-- attributs à ne modifier
+							
 							<label for="typeClient">Type de client :</label>
 							<input type="radio" name="typeClient" id="typeClient" value="PARTICULIER" ${ client.typeClient=='PARTICULIER' ? "checked" : "" }/><span>Particulier</span>
 							<input type="radio" name="typeClient" id="typeClient" value="ENTREPRISE" ${ client.typeClient=='ENTREPRISE' ? "checked" : "" }/><span>Entreprise</span><br/>
 							<label for="idConseiller">Id Conseiller : </label><input type="text" name="idConseiller" id="idConseiller" value="${sessionScope.idConseiller}"/><br />
-							
+							-->
 						</fieldset>
 						<br /> <input type="submit" value="Modifier" />
 					</form>

@@ -13,6 +13,7 @@ import service.AuthentificationService;
 import service.IAuthentificationService;
 
 /**
+ * Servlet de gestion des authentifications
  * Servlet implementation class Authentification
  */
 @WebServlet("/Authentification")

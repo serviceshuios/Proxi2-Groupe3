@@ -15,6 +15,7 @@ import service.IServiceConseillerClientele;
 import service.ServiceConseillerClientele;
 
 /**
+ * Servlet de gestion des actions relatives aux clients
  * Servlet implementation class GestionClient
  */
 @WebServlet("/GestionClient")
@@ -111,9 +112,10 @@ public class GestionClient extends HttpServlet {
 			String email = request.getParameter("email");
 			String telephone = request.getParameter("telephone");
 			
-			//non utlisisée pour le moment
+			/*non utlisisés pour le moment
 			String typeClient = request.getParameter("typeClient");
 			int idCons = Integer.parseInt(request.getParameter("idConseiller"));
+			*/
 			
 			//si pas d'id passé en paramètre on envoi la page d'erreur
 			if (strIdClient == null || strIdClient.equals("")){
