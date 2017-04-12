@@ -192,7 +192,7 @@ public class Dao implements IDao {
 			// 5-Presenter les resultats
 			if (rs.next()) {
 				compteC = new CompteCourant();
-				compteC.setNumeroCompte(rs.getInt("NumeroCompte"));
+				compteC.setNumeroCompte(rs.getInt("compte.NumeroCompte"));
 				compteC.setDateDouverture(rs.getString("DateOuverture"));
 				compteC.setDecouvert(rs.getFloat("DecouvertAutorise"));
 				compteC.setSolde(rs.getFloat("Solde"));
@@ -219,7 +219,8 @@ public class Dao implements IDao {
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
 			if (rs.next()) {
-				compteE.setNumeroCompte(rs.getInt("NumeroCompte"));
+				compteE = new CompteEpargne();
+				compteE.setNumeroCompte(rs.getInt("compte.NumeroCompte"));
 				compteE.setDateDouverture(rs.getString("DateOuverture"));
 				compteE.setTauxRemuneration(rs.getFloat("TauxRemuneration"));
 				compteE.setSolde(rs.getFloat("Solde"));
