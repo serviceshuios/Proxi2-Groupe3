@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <ul>
-	<li><a href="/ProxyBanque/">Accueil</a></li>
+	<li><a href="/ProxiBanque/">Accueil</a></li>
 	<!-- renvoit à l'index -->
 	<li><c:if test="${ empty sessionScope.droits }">
 			<a href=Authentification>Authentification</a>
