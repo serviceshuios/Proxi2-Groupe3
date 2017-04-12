@@ -14,9 +14,9 @@ public interface IDao {
 
 	public List<Client> listerClient(int IdConseiller);
 
-	public void ajouterConseiller(ConseillerClientele cc, String login, String mdp);
+	public int ajouterConseiller(ConseillerClientele cc, String login, String mdp);
 
-	public void modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
+	public int modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
 			String ville, String telephone);
 
 	public Client chercherClient(int id);
@@ -25,9 +25,9 @@ public interface IDao {
 
 	public CompteEpargne chercherCompteEpargne(int idclient);
 
-	public void ajouterCompteCourant(CompteCourant compteC, int idclient);
+	public int ajouterCompteCourant(CompteCourant compteC, int idclient);
 
-	public void virementCompte(Compte CompteADebiter, Compte CompteACrediter);
+	public int virementCompte(Compte CompteADebiter, Compte CompteACrediter);
 
 	public Compte chercherCompteNum(int numCompte);
 }

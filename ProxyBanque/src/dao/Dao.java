@@ -91,7 +91,10 @@ public class Dao implements IDao {
 	}
 
 	@Override
-	public void ajouterConseiller(ConseillerClientele cc, String login, String mdp) {
+	public int ajouterConseiller(ConseillerClientele cc, String login, String mdp) {
+		
+		int nbInsert = 0;
+		
 		try {
 			Connection conn = DaoConnexion.getConnection();
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO conseiller(Nom, Prenom, Adresse, "
@@ -105,7 +108,7 @@ public class Dao implements IDao {
 			ps.setString(7, cc.getEmail());
 			ps.setString(8, login);
 			ps.setString(9, mdp);
-			ps.executeUpdate();
+			nbInsert += ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,11 +117,16 @@ public class Dao implements IDao {
 			// 6-Fermer la connexion
 			DaoConnexion.closeConnection();
 		}
+		
+		return nbInsert;
 	}
 
 	@Override
-	public void modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
+	public int modifierClient(int id, String nom, String prenom, String email, String adresse, int codepostal,
 			String ville, String telephone) {
+		
+		int nbUpdate = 0;
+		
 		try {
 			Connection conn = DaoConnexion.getConnection();
 			// 3-Creer la requete
@@ -133,7 +141,7 @@ public class Dao implements IDao {
 			ps.setString(7, email);
 			ps.setInt(8, id);
 			// 4-Executer la requete
-			ps.executeUpdate();
+			nbUpdate += ps.executeUpdate();
 			// 5-Presenter les resultats
 			// 6-Fermer la connexion
 			conn.close();
@@ -145,6 +153,7 @@ public class Dao implements IDao {
 			// 6-Fermer la connexion
 			DaoConnexion.closeConnection();
 		}
+		return nbUpdate;
 	}
 
 	@Override
@@ -235,16 +244,19 @@ public class Dao implements IDao {
 	}
 
 	@Override
-	public void ajouterCompteCourant(CompteCourant compteC, int idclient) {
+	public int ajouterCompteCourant(CompteCourant compteC, int idclient) {
+		
+		int nbInsert = 0;
+		
 		PreparedStatement ps = null;
 		try {
 			Connection conn = DaoConnexion.getConnection();
-			ps = conn.prepareStatement("INSERT INTO compte(DateOuverture, Solde) VALUES (?,?) WHERE compte.IdClient= ?",
+			ps = conn.prepareStatement("INSERT INTO compte (DateOuverture, Solde, IdClient) VALUES (?,?,?)",
 					ps.RETURN_GENERATED_KEYS);
 			ps.setString(1, compteC.getDateDouverture());
 			ps.setFloat(2, compteC.getSolde());
 			ps.setInt(3, idclient);
-			ps.executeUpdate();
+			nbInsert += ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs != null && rs.first()) {
 				// on récupère l'id généré
@@ -254,7 +266,7 @@ public class Dao implements IDao {
 						.prepareStatement("INSERT INTO comptecourant(DecouvertAutorise, NumeroCompte) VALUES (?,?)");
 				ps2.setFloat(1, compteC.getDecouvert());
 				ps2.setInt(2, (int) generatedId);
-				ps2.executeUpdate();
+				nbInsert+=ps2.executeUpdate();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -264,21 +276,67 @@ public class Dao implements IDao {
 			// 6-Fermer la connexion
 			DaoConnexion.closeConnection();
 		}
+		
+		return nbInsert;
 	}
 
 	@Override
 	public Compte chercherCompteNum(int numCompte) {
 		Compte compte = null;
 		try {
+
+			// attributs du compte
+			int numeroCompte = 0;
+			float solde = 0;
+			String dateDouverture = "";
+
 			Connection conn = DaoConnexion.getConnection();
 			// 3-Creer la requete
-			PreparedStatement ps = conn.prepareStatement("SELECT Solde FROM compte WHERE NumeroCompte = ?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM compte WHERE NumeroCompte = ?");
 			ps.setInt(1, numCompte);
 			// 4-Executer la requete
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
 			if (rs.next()) {
-				compte.setSolde(rs.getFloat("Solde"));
+
+				numeroCompte = rs.getInt("NumeroCompte");
+				solde = rs.getFloat("Solde");
+				dateDouverture = rs.getString("DateOuverture");
+
+				// on recherche les info complementaire du compte dansles autres
+				// tables
+				PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM comptecourant WHERE NumeroCompte = ?");
+				ps1.setInt(1, numeroCompte);
+				ResultSet rs1 = ps1.executeQuery();
+
+				PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM compteepargne WHERE NumeroCompte = ?");
+				ps2.setInt(1, numeroCompte);
+				ResultSet rs2 = ps2.executeQuery();
+
+				//cas où le compte est un compte courant
+				if (rs1.next()) {
+
+					compte = new CompteCourant();
+
+					compte.setNumeroCompte(numeroCompte);
+					compte.setSolde(solde);
+					compte.setDateDouverture(dateDouverture);
+
+					((CompteCourant) compte).setDecouvert(rs1.getInt("DecouvertAutorise"));
+
+				}
+				//cas où le compte est un compte epragne
+				if (rs2.next()) {
+
+					compte = new CompteEpargne();
+
+					compte.setNumeroCompte(numeroCompte);
+					compte.setSolde(solde);
+					compte.setDateDouverture(dateDouverture);
+
+					((CompteEpargne) compte).setTauxRemuneration(rs2.getInt("TauxRemuneration"));
+				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -288,17 +346,20 @@ public class Dao implements IDao {
 		return compte;
 	}
 
-	public void virementCompte(Compte CompteADebiter, Compte CompteACrediter) {
+	public int virementCompte(Compte CompteADebiter, Compte CompteACrediter) {
+		
+		int nbUpdate = 0;
+		
 		try {
 			Connection conn = DaoConnexion.getConnection();
 			PreparedStatement ps = conn.prepareStatement("UPDATE compte SET Solde =? WHERE NumeroCompte= ?");
 			ps.setFloat(1, CompteADebiter.getSolde());
 			ps.setInt(2, CompteADebiter.getNumeroCompte());
-			ps.executeUpdate();
+			nbUpdate += ps.executeUpdate();
 			PreparedStatement ps2 = conn.prepareStatement("UPDATE compte SET Solde =? WHERE NumeroCompte= ?");
 			ps2.setFloat(1, CompteACrediter.getSolde());
 			ps2.setInt(2, CompteACrediter.getNumeroCompte());
-			ps2.executeUpdate();
+			nbUpdate += ps2.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -307,6 +368,8 @@ public class Dao implements IDao {
 			// 6-Fermer la connexion
 			DaoConnexion.closeConnection();
 		}
+		
+		return nbUpdate;
 	}
 
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/style.css" />
-<title>TODO</title>
+<title>Virement entre les comptes</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -34,7 +34,7 @@
 					${ client.nom } :</p>
 				<br />
 
-				<form method="post" action="GestionCompte?action=EffectuerVirementInterne">
+				<form method="post" action="GestionCompte?action=EffectuerVirementInterne&idClient=${client.idClient }">
 				
 
 						<p>Compte à débiter</p>
