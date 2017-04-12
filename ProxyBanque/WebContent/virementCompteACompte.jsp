@@ -34,7 +34,7 @@
 					${ client.nom } :</p>
 				<br />
 
-				<form method="post" action="GestionCompte?action=EffectuerVirementInterne">
+				<form method="post" action="GestionCompte?action=EffectuerVirementInterne&idClient=${client.idClient }">
 				
 
 						<p>Compte à débiter</p>

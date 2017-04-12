@@ -270,15 +270,59 @@ public class Dao implements IDao {
 	public Compte chercherCompteNum(int numCompte) {
 		Compte compte = null;
 		try {
+
+			// attributs du compte
+			int numeroCompte = 0;
+			int solde = 0;
+			String dateDouverture = "";
+
 			Connection conn = DaoConnexion.getConnection();
 			// 3-Creer la requete
-			PreparedStatement ps = conn.prepareStatement("SELECT Solde FROM compte WHERE NumeroCompte = ?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM compte WHERE NumeroCompte = ?");
 			ps.setInt(1, numCompte);
 			// 4-Executer la requete
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
 			if (rs.next()) {
-				compte.setSolde(rs.getFloat("Solde"));
+
+				numeroCompte = rs.getInt("NumeroCompte");
+				solde = rs.getInt("Solde");
+				dateDouverture = rs.getString("DateOuverture");
+
+				// on recherche les info complementaire du compte dansles autres
+				// tables
+				PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM comptecourant WHERE NumeroCompte = ?");
+				ps1.setInt(1, numeroCompte);
+				ResultSet rs1 = ps1.executeQuery();
+
+				PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM compteepargne WHERE NumeroCompte = ?");
+				ps2.setInt(1, numeroCompte);
+				ResultSet rs2 = ps2.executeQuery();
+
+				//cas où le compte est un compte courant
+				if (rs1.next()) {
+
+					compte = new CompteCourant();
+
+					compte.setNumeroCompte(numeroCompte);
+					compte.setSolde(solde);
+					compte.setDateDouverture(dateDouverture);
+
+					((CompteCourant) compte).setDecouvert(rs1.getInt("DecouvertAutorise"));
+
+				}
+				//cas où le compte est un compte epragne
+				if (rs2.next()) {
+
+					compte = new CompteEpargne();
+
+					compte.setNumeroCompte(numeroCompte);
+					compte.setSolde(solde);
+					compte.setDateDouverture(dateDouverture);
+
+					((CompteEpargne) compte).setTauxRemuneration(rs2.getInt("TauxRemuneration"));
+				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

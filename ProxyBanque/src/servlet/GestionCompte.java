@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -163,6 +162,8 @@ public class GestionCompte extends HttpServlet {
 			String strCompteACrediter = request.getParameter("compteACrediter");
 			String strMontant = request.getParameter("montant");
 
+			int idClient = Integer.parseInt(request.getParameter("idClient"));
+			
 			int compteADebiter = 0;
 			int compteACrediter = 0;
 			float montant = 0;
@@ -213,6 +214,14 @@ public class GestionCompte extends HttpServlet {
 
 					try {
 						icc.effectuerVirement(compteADebiter, compteACrediter, montant);
+						
+						// on ajoute à la requete
+						request.setAttribute("comptes", icc.chercherComptes(idClient));
+						request.setAttribute("client", icc.chercherClient(idClient));
+						// on forward à la jsp virementCompteACompteComptes
+						request.getRequestDispatcher("/virementCompteACompte.jsp").forward(request, response);
+						
+						
 					} catch (SoldeInsuffisantException e) {
 
 						request.setAttribute("msgErreur", e.getMessage());
@@ -226,8 +235,7 @@ public class GestionCompte extends HttpServlet {
 						request.getRequestDispatcher("/erreur.jsp").forward(request, response);
 					}
 
-					// on forward à la jsp virementCompteACompteComptes
-					request.getRequestDispatcher("/virementCompteACompte.jsp").forward(request, response);
+					
 				}
 			}
 
