@@ -118,7 +118,7 @@ public class Dao implements IDao {
 			Connection conn = DaoConnexion.getConnection();
 			// 3-Creer la requete
 			PreparedStatement ps = conn.prepareStatement(
-					"UPDATE client SET Nom =? , Prenom = ?, Adresse = ? , CodePostal = ?, Ville= ?, Telephone = ?, Email = ?, where IdClient = ?");
+					"UPDATE client SET Nom =? , Prenom = ?, Adresse = ? , CodePostal = ?, Ville= ?, Telephone = ?, Email = ? where IdClient = ?");
 			ps.setString(1, nom);
 			ps.setString(2, prenom);
 			ps.setString(3, adresse);
@@ -144,7 +144,7 @@ public class Dao implements IDao {
 
 	@Override
 	public Client chercherClient(int id) {
-		Client c = new Client();
+		Client c = null;
 		try {
 			Connection conn = DaoConnexion.getConnection();
 			// 3-Creer la requete
@@ -153,17 +153,18 @@ public class Dao implements IDao {
 			// 4-Executer la requete
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
-			rs.next();
-			c.setIdClient(rs.getInt("IdClient"));
-			c.setNom(rs.getString("Nom"));
-			c.setPrenom(rs.getString("Prenom"));
-			c.setAdresse(rs.getString("Adresse"));
-			c.setCodePostal(rs.getInt("CodePostal"));
-			c.setVille(rs.getString("Ville"));
-			c.setTelephone(rs.getString("Telephone"));
-			c.setEmail(rs.getString("Email"));
-			c.setTypeClient(rs.getString("TypeClient"));
-
+			if (rs.next()) {
+				c = new Client();
+				c.setIdClient(rs.getInt("IdClient"));
+				c.setNom(rs.getString("Nom"));
+				c.setPrenom(rs.getString("Prenom"));
+				c.setAdresse(rs.getString("Adresse"));
+				c.setCodePostal(rs.getInt("CodePostal"));
+				c.setVille(rs.getString("Ville"));
+				c.setTelephone(rs.getString("Telephone"));
+				c.setEmail(rs.getString("Email"));
+				c.setTypeClient(rs.getString("TypeClient"));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
