@@ -50,26 +50,29 @@ form input {
 	padding: 10px 0px 5px 10px;
 	background-color: #ff7575;
 	color: white;
+	vertical-align: middle;
 	}
 
 form label {
-	display: inline-block;
 	width: 150px;
-	padding: 5px 0px 5px 10px;
+	height : 37px;
+	padding: 5px 5px 5px 10px;
 	color: white;
-}
+	margin : auto;
+	text-align: justify;
+	}
 
 form legend {
 	color: white;
 }
 
 form input[type="submit"] {
-	padding : 10px;
 	width: 150px;
 	height: 30px;
-	margin: auto;
 	background-color: white;
+	padding: 5px 0px 5px 10px;
 	color: black;
+	margin: auto;
 	text-align: center;
 }
 
