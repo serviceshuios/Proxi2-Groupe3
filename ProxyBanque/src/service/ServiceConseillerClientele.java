@@ -235,16 +235,23 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 	@Override
 	public void effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
 			throws SoldeInsuffisantException, MontantNegatifException {
+		
 		Compte CompteADebiter = idao.chercherCompteNum(NumCompteADebiter);
+		
 		if (somme < 0) {
 			throw new MontantNegatifException("Montant négatif");
 		} else if (somme > CompteADebiter.getSolde()) {
 			throw new SoldeInsuffisantException("Solde insuffisant");
 		} else {
+			
 			Compte CompteACrediter = idao.chercherCompteNum(NumCompteACrediter);
+			
 			CompteADebiter.setSolde(CompteADebiter.getSolde() - somme);
 			CompteACrediter.setSolde(CompteACrediter.getSolde() + somme);
+			
 			idao.virementCompte(CompteADebiter, CompteACrediter);
+			
+
 		}
 
 	}

@@ -273,7 +273,7 @@ public class Dao implements IDao {
 
 			// attributs du compte
 			int numeroCompte = 0;
-			int solde = 0;
+			float solde = 0;
 			String dateDouverture = "";
 
 			Connection conn = DaoConnexion.getConnection();
@@ -286,7 +286,7 @@ public class Dao implements IDao {
 			if (rs.next()) {
 
 				numeroCompte = rs.getInt("NumeroCompte");
-				solde = rs.getInt("Solde");
+				solde = rs.getFloat("Solde");
 				dateDouverture = rs.getString("DateOuverture");
 
 				// on recherche les info complementaire du compte dansles autres
