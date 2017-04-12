@@ -190,7 +190,7 @@ public interface IServiceConseillerClientele {
 	 * @throws MontantNegatifException
 	 *             leve une exception si la somme est négative
 	 */
-	public void effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
+	public boolean effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
 			throws SoldeInsuffisantException, MontantNegatifException;
 
 	/**

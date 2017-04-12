@@ -233,7 +233,7 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 	 * @author Pierre
 	 */
 	@Override
-	public void effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
+	public boolean effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
 			throws SoldeInsuffisantException, MontantNegatifException {
 		
 		Compte CompteADebiter = idao.chercherCompteNum(NumCompteADebiter);
@@ -253,6 +253,8 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 			
 
 		}
+		
+		return true;
 
 	}
 
