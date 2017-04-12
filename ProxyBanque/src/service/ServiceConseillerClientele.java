@@ -233,16 +233,18 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 	 * @author Pierre
 	 */
 	@Override
-	public void effectuerVirement(Compte compteADebite, Compte CompteACrediter, float somme)
+	public void effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
 			throws SoldeInsuffisantException, MontantNegatifException {
-
+		Compte CompteADebiter = idao.chercherCompteNum(NumCompteADebiter);
 		if (somme < 0) {
 			throw new MontantNegatifException("Montant négatif");
-		} else if (somme > compteADebite.getSolde()) {
+		} else if (somme > CompteADebiter.getSolde()) {
 			throw new SoldeInsuffisantException("Solde insuffisant");
 		} else {
-			compteADebite.setSolde(compteADebite.getSolde() - somme);
+			Compte CompteACrediter = idao.chercherCompteNum(NumCompteACrediter);
+			CompteADebiter.setSolde(CompteADebiter.getSolde() - somme);
 			CompteACrediter.setSolde(CompteACrediter.getSolde() + somme);
+			idao.virementCompte(CompteADebiter, CompteACrediter);
 		}
 
 	}
@@ -300,7 +302,7 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 
 	@Override
 	public Client chercherClient(int idClient) {
-		
+
 		return idao.chercherClient(idClient);
 	}
 
@@ -312,34 +314,32 @@ public class ServiceConseillerClientele implements IServiceConseillerClientele {
 
 	@Override
 	public CompteEpargne chercherCompteEpargne(int idClient) {
-		
+
 		return idao.chercherCompteEpargne(idClient);
 	}
 
 	@Override
 	public CompteCourant chercherCompteCourant(int idClient) {
-		
+
 		return idao.chercherCompteCourant(idClient);
 	}
 
 	@Override
 	public List<Compte> chercherComptes(int idClient) {
-		
+
 		List<Compte> comptes = new ArrayList<Compte>();
-		
+
 		CompteCourant cc = idao.chercherCompteCourant(idClient);
 		CompteEpargne ce = idao.chercherCompteEpargne(idClient);
-		
-		if (cc != null){
+
+		if (cc != null) {
 			comptes.add(cc);
 		}
-		if (ce != null){
+		if (ce != null) {
 			comptes.add(ce);
 		}
-		
+
 		return comptes;
 	}
-	
-	
 
 }

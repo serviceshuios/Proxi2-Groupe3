@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import metier.Client;
+import metier.Compte;
 import metier.CompteCourant;
 import metier.CompteEpargne;
 import metier.ConseillerClientele;
@@ -23,6 +24,10 @@ public interface IDao {
 	public CompteCourant chercherCompteCourant(int idclient);
 
 	public CompteEpargne chercherCompteEpargne(int idclient);
-	
-	public void ajouterCompteCourant(CompteCourant compteC, int idclient) ;
+
+	public void ajouterCompteCourant(CompteCourant compteC, int idclient);
+
+	public void virementCompte(Compte CompteADebiter, Compte CompteACrediter);
+
+	public Compte chercherCompteNum(int numCompte);
 }

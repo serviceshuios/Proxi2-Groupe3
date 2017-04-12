@@ -190,7 +190,7 @@ public interface IServiceConseillerClientele {
 	 * @throws MontantNegatifException
 	 *             leve une exception si la somme est négative
 	 */
-	public void effectuerVirement(Compte compteADebite, Compte CompteACrediter, float somme)
+	public void effectuerVirement(int NumCompteADebiter, int NumCompteACrediter, float somme)
 			throws SoldeInsuffisantException, MontantNegatifException;
 
 	/**
@@ -237,13 +237,15 @@ public interface IServiceConseillerClientele {
 
 	/**
 	 * retrouve un client à partir de son id
+	 * 
 	 * @param idClient
 	 * @return
 	 */
 	public Client chercherClient(int idClient);
-	
+
 	/**
 	 * Modifie le client dont l'id est spécifié avec de nouveaux paramètres
+	 * 
 	 * @param id
 	 * @param nom
 	 * @param prenom
@@ -257,25 +259,29 @@ public interface IServiceConseillerClientele {
 			String ville, String telephone);
 
 	/**
-	 * renvoi le compte Epargne d'un client s'il existe ou null dans le cas contraire
+	 * renvoi le compte Epargne d'un client s'il existe ou null dans le cas
+	 * contraire
+	 * 
 	 * @param idClient
 	 * @return
 	 */
 	public CompteEpargne chercherCompteEpargne(int idClient);
-	
+
 	/**
-	 * renvoi le compte Courant d'un client s'il existe ou null dans le cas contraire
+	 * renvoi le compte Courant d'un client s'il existe ou null dans le cas
+	 * contraire
+	 * 
 	 * @param idClient
 	 * @return
 	 */
 	public CompteCourant chercherCompteCourant(int idClient);
-	
+
 	/**
 	 * renvoi la liste des comptes d'un client
+	 * 
 	 * @param idClient
 	 * @return
 	 */
 	public List<Compte> chercherComptes(int idClient);
-	
-	
+
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.Client;
+import metier.Compte;
 import metier.CompteCourant;
 import metier.CompteEpargne;
 import metier.ConseillerClientele;
@@ -238,8 +239,7 @@ public class Dao implements IDao {
 		PreparedStatement ps = null;
 		try {
 			Connection conn = DaoConnexion.getConnection();
-			ps = conn.prepareStatement(
-					"INSERT INTO compte(DateOuverture, Solde) VALUES (?,?) WHERE compte.IdClient= ?",
+			ps = conn.prepareStatement("INSERT INTO compte(DateOuverture, Solde) VALUES (?,?) WHERE compte.IdClient= ?",
 					ps.RETURN_GENERATED_KEYS);
 			ps.setString(1, compteC.getDateDouverture());
 			ps.setFloat(2, compteC.getSolde());
@@ -265,4 +265,48 @@ public class Dao implements IDao {
 			DaoConnexion.closeConnection();
 		}
 	}
+
+	@Override
+	public Compte chercherCompteNum(int numCompte) {
+		Compte compte = null;
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			// 3-Creer la requete
+			PreparedStatement ps = conn.prepareStatement("SELECT Solde FROM compte WHERE NumeroCompte = ?");
+			ps.setInt(1, numCompte);
+			// 4-Executer la requete
+			ResultSet rs = ps.executeQuery();
+			// 5-Presenter les resultats
+			if (rs.next()) {
+				compte.setSolde(rs.getFloat("Solde"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DaoConnexion.closeConnection();
+		}
+		return compte;
+	}
+
+	public void virementCompte(Compte CompteADebiter, Compte CompteACrediter) {
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			PreparedStatement ps = conn.prepareStatement("UPDATE compte SET Solde =? WHERE NumeroCompte= ?");
+			ps.setFloat(1, CompteADebiter.getSolde());
+			ps.setInt(2, CompteADebiter.getNumeroCompte());
+			ps.executeUpdate();
+			PreparedStatement ps2 = conn.prepareStatement("UPDATE compte SET Solde =? WHERE NumeroCompte= ?");
+			ps2.setFloat(1, CompteACrediter.getSolde());
+			ps2.setInt(2, CompteACrediter.getNumeroCompte());
+			ps2.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			// code qui est executé quelles que soient les étapes précédentes
+			// 6-Fermer la connexion
+			DaoConnexion.closeConnection();
+		}
+	}
+
 }
