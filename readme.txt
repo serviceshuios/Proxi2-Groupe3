@@ -1,5 +1,5 @@
 
-Ce document a pour but de vous expliquer les démarches à effectuer afin de pouvoir déployer le fichier ProxyBanque.war 
+Ce document a pour but de vous expliquer les démarches à effectuer afin de pouvoir déployer le fichier ProxiBanque.war 
 en toute simplicité afin de pouvoir l'installer et l'exécuter dans un environnement Windows ayant pour serveur d'application TomCat.
 
 Un fichier Web archive (.war) contient tous les composants d'une application web de manière organisée et hiérarchisée.Il a pour 
@@ -52,29 +52,34 @@ Etape 4 : installer la base de données fournie
 => Cliquez sur Exécuter
 => Votre base de données est installée
 
+NOTE : le fichier DATA_Demo.sql fourni contient des données de démonstration qui peuvent être inserée en base via le même mécanisme d'import
 
 Etape 5 : installer un serveur TomCat 
 
 => Ouvrir un navigateur internet et coller l'URL suivante => http://tomcat.apache.org/download-90.cgi
 => Maintenant cliquez sur la version Core qui vous intéresse et qui dépend de votre système d'exploitation et de votre nombre de bits que vous avez trouvé dans l'étape 0.
 => Cliquez sur "variable d'environnement"
-=> Dans les variables d'utilisateur, si une variable "Path" existe, ajouter le chemin vers le dossier "bin" du répertoire d'installation du JRE.
+=> Dans les variables d'environnement utilisateur, si une variable "Path" existe, ajouter le chemin vers le dossier "bin" du répertoire d'installation du JRE.
 => Si la variable n'existe pas, la créer, et ajouter le chemin comme précedemment.
 
 
 Etape 6 : déployer l'application dans TomCat
 
 => Démarrer Tomcat (bin/startup.bat)
-=> La méthode la plus simple est d'ajouter les services dans le même conteneur de Tomcat. 
 => Les fichiers de configuration sont déjà configurés pour le paramètre du port 8080. 
 => Vous devez vérifier si votre système hôte est spécifié dans les fichiers de configuration et laisser le numéro de port tel quel. 
-=> Copiez les fichiers extraits pour chaque service dans le conteneur de l'application Tomcat sous <installdir>\tomcats\tomcat-9.0.0.M19_repository\webapps
+=> Copiez le fichier ProxiBanque.war fourni dans le dossier \webapps du repertoire d'installation de TomCat
 => Redémarrez Tomcat
 
 Etape 6 : utiliser l'application
 
-=> Allez sur l'url suivante : localhost:8080/ProxyBanque/ 
+=> Allez sur l'url suivante : localhost:8080/ProxiBanque/ 
 => Maintenant votre programme est lancé.
 
+NOTE : si vous avez installé les données de démo à l'étape 4, vous pouvez tester le logiciel en vous connectant aux comptes utilisateurs suivants :
+Login : PJJ , Mot de passe : pjj
+Login : JASON , Mot de passe : BOURNE
+Login : TITI , Mot de passe : 123
+
 => Pour consulter la documentation (javadoc) de l'application, double-cliquez sur le fichier index.html se trouvant dans le repertoire "doc" 
-livré avec le dossier ProxyBanque.  
+livré avec le dossier ProxiBanque.  
