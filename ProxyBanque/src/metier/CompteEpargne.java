@@ -40,6 +40,12 @@ public class CompteEpargne extends Compte {
 	 */
 	public CompteEpargne(int numeroCompte, float solde, String dateDouverture) {
 		super(numeroCompte, solde, dateDouverture);
+	}
+
+	//Constructeur vide
+	public CompteEpargne() {
+		super();
 	} 
+	
 	
 }

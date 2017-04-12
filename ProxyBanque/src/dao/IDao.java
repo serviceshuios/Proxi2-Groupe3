@@ -3,6 +3,8 @@ package dao;
 import java.util.List;
 
 import metier.Client;
+import metier.CompteCourant;
+import metier.CompteEpargne;
 import metier.ConseillerClientele;
 
 public interface IDao {
@@ -17,4 +19,8 @@ public interface IDao {
 			String ville, String telephone);
 
 	public Client chercherClient(int id);
+
+	public CompteCourant chercherCompteCourant(int idclient);
+
+	public CompteEpargne chercherCompteEpargne(int idclient);
 }

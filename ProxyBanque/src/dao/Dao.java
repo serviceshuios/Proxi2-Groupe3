@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.Client;
+import metier.CompteCourant;
+import metier.CompteEpargne;
 import metier.ConseillerClientele;
 
 public class Dao implements IDao {
@@ -171,5 +173,67 @@ public class Dao implements IDao {
 			DaoConnexion.closeConnection();
 		}
 		return c;
+	}
+
+	@Override
+	public CompteCourant chercherCompteCourant(int idclient) {
+		CompteCourant compteC = null;
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			// 3-Creer la requete
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM compte, comptecourant WHERE compte.NumeroCompte=comptecourant.NumeroCompte "
+							+ "and compte.IdClient = ?");
+			ps.setInt(1, idclient);
+			// 4-Executer la requete
+			ResultSet rs = ps.executeQuery();
+			// 5-Presenter les resultats
+			if (rs.next()) {
+				compteC = new CompteCourant();
+				Client c = new Client();
+				chercherClient(idclient);
+				compteC.setNumeroCompte(rs.getInt("NumeroCompte"));
+				compteC.setClient(c);
+				compteC.setDateDouverture(rs.getString("DateOuverture"));
+				compteC.setDecouvert(rs.getFloat("DecouvertAutorise"));
+				compteC.setSolde(rs.getFloat("Solde"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DaoConnexion.closeConnection();
+		}
+		return compteC;
+	}
+
+	@Override
+	public CompteEpargne chercherCompteEpargne(int idclient) {
+		CompteEpargne compteE = null;
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			// 3-Creer la requete
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM compte, compteepargne WHERE compte.NumeroCompte=compteepargne.NumeroCompte "
+							+ "and compte.IdClient = ?");
+			ps.setInt(1, idclient);
+			// 4-Executer la requete
+			ResultSet rs = ps.executeQuery();
+			// 5-Presenter les resultats
+			if (rs.next()) {
+				compteE = new CompteEpargne();
+				Client c = new Client();
+				chercherClient(idclient);
+				compteE.setNumeroCompte(rs.getInt("NumeroCompte"));
+				compteE.setClient(c);
+				compteE.setDateDouverture(rs.getString("DateOuverture"));
+				compteE.setTauxRemuneration(rs.getFloat("TauxRemuneration"));
+				compteE.setSolde(rs.getFloat("Solde"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DaoConnexion.closeConnection();
+		}
+		return compteE;
 	}
 }

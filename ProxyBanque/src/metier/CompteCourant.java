@@ -50,6 +50,11 @@ public class CompteCourant extends Compte {
 	public CompteCourant(int numeroCompte, float solde, String dateDouverture) {
 		super(numeroCompte, solde, dateDouverture);
 	}
+	
+	//Constructeur vide
+	public CompteCourant() {
+		super();
+	}
 
 	@Override
 	public String toString() {
