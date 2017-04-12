@@ -23,4 +23,6 @@ public interface IDao {
 	public CompteCourant chercherCompteCourant(int idclient);
 
 	public CompteEpargne chercherCompteEpargne(int idclient);
+	
+	public void ajouterCompteCourant(CompteCourant compteC, int idclient) ;
 }

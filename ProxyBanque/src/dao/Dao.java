@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +122,7 @@ public class Dao implements IDao {
 			Connection conn = DaoConnexion.getConnection();
 			// 3-Creer la requete
 			PreparedStatement ps = conn.prepareStatement(
-					"UPDATE client SET Nom =? , Prenom = ?, Adresse = ? , CodePostal = ?, Ville= ?, Telephone = ?, Email = ? where IdClient = ?");
+					"UPDATE client SET Nom =? , Prenom = ?, Adresse = ? , CodePostal = ?, Ville= ?, Telephone = ?, Email = ? WHERE IdClient = ?");
 			ps.setString(1, nom);
 			ps.setString(2, prenom);
 			ps.setString(3, adresse);
@@ -190,10 +192,7 @@ public class Dao implements IDao {
 			// 5-Presenter les resultats
 			if (rs.next()) {
 				compteC = new CompteCourant();
-				Client c = new Client();
-				chercherClient(idclient);
 				compteC.setNumeroCompte(rs.getInt("NumeroCompte"));
-				compteC.setClient(c);
 				compteC.setDateDouverture(rs.getString("DateOuverture"));
 				compteC.setDecouvert(rs.getFloat("DecouvertAutorise"));
 				compteC.setSolde(rs.getFloat("Solde"));
@@ -220,11 +219,7 @@ public class Dao implements IDao {
 			ResultSet rs = ps.executeQuery();
 			// 5-Presenter les resultats
 			if (rs.next()) {
-				compteE = new CompteEpargne();
-				Client c = new Client();
-				chercherClient(idclient);
 				compteE.setNumeroCompte(rs.getInt("NumeroCompte"));
-				compteE.setClient(c);
 				compteE.setDateDouverture(rs.getString("DateOuverture"));
 				compteE.setTauxRemuneration(rs.getFloat("TauxRemuneration"));
 				compteE.setSolde(rs.getFloat("Solde"));
@@ -235,5 +230,38 @@ public class Dao implements IDao {
 			DaoConnexion.closeConnection();
 		}
 		return compteE;
+	}
+
+	@Override
+	public void ajouterCompteCourant(CompteCourant compteC, int idclient) {
+		PreparedStatement ps = null;
+		try {
+			Connection conn = DaoConnexion.getConnection();
+			ps = conn.prepareStatement(
+					"INSERT INTO compte(DateOuverture, Solde) VALUES (?,?) WHERE compte.IdClient= ?",
+					ps.RETURN_GENERATED_KEYS);
+			ps.setString(1, compteC.getDateDouverture());
+			ps.setFloat(2, compteC.getSolde());
+			ps.setInt(3, idclient);
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs != null && rs.first()) {
+				// on récupère l'id généré
+				long generatedId = rs.getLong(1);
+
+				PreparedStatement ps2 = conn
+						.prepareStatement("INSERT INTO comptecourant(DecouvertAutorise, NumeroCompte) VALUES (?,?)");
+				ps2.setFloat(1, compteC.getDecouvert());
+				ps2.setInt(2, (int) generatedId);
+				ps2.executeUpdate();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			// code qui est executé quelles que soient les étapes précédentes
+			// 6-Fermer la connexion
+			DaoConnexion.closeConnection();
+		}
 	}
 }
