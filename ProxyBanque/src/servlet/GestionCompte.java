@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,10 +18,12 @@ import metier.CompteCourant;
 import metier.CompteEpargne;
 import service.IServiceConseillerClientele;
 import service.ServiceConseillerClientele;
+import service.exception.MontantNegatifException;
+import service.exception.SoldeInsuffisantException;
 
 /**
- * Servlet de gestion des actions relatives aux comptes
- * Servlet implementation class GestionCompte
+ * Servlet de gestion des actions relatives aux comptes Servlet implementation
+ * class GestionCompte
  */
 @WebServlet("/GestionCompte")
 public class GestionCompte extends HttpServlet {
@@ -27,6 +31,15 @@ public class GestionCompte extends HttpServlet {
 
 	// instanciation du service conseiller
 	private IServiceConseillerClientele icc = new ServiceConseillerClientele();
+
+	// création d'un formatage pour les float
+	
+	public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
+    }
+	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -72,7 +85,8 @@ public class GestionCompte extends HttpServlet {
 			// on recupère le parametre idClient s'il existe
 			String strIdClient = request.getParameter("idClient");
 
-			// on prépare les variable pour le transport des comptes et des infos client
+			// on prépare les variable pour le transport des comptes et des
+			// infos client
 			CompteEpargne compteEpargne = null;
 			CompteCourant compteCourant = null;
 			Client client = null;
@@ -88,13 +102,13 @@ public class GestionCompte extends HttpServlet {
 			} else {
 				int idClient = Integer.parseInt(strIdClient);
 
-				//on récupère la liste des comptes du client
+				// on récupère la liste des comptes du client
 				compteEpargne = icc.chercherCompteEpargne(idClient);
 				compteCourant = icc.chercherCompteCourant(idClient);
-				//on récupère le client
+				// on récupère le client
 				client = icc.chercherClient(idClient);
 
-				//on ajoute à la requete
+				// on ajoute à la requete
 				request.setAttribute("compteEpargne", compteEpargne);
 				request.setAttribute("compteCourant", compteCourant);
 				request.setAttribute("client", client);
@@ -104,13 +118,14 @@ public class GestionCompte extends HttpServlet {
 			}
 
 		}
-		
+
 		else if (action.equals("Virement")) {
 
 			// on recupère le parametre idClient s'il existe
 			String strIdClient = request.getParameter("idClient");
 
-			// on prépare les variable pour le transport des comptes et des infos client
+			// on prépare les variable pour le transport des comptes et des
+			// infos client
 			List<Compte> comptes;
 			Client client = null;
 
@@ -125,22 +140,99 @@ public class GestionCompte extends HttpServlet {
 			} else {
 				int idClient = Integer.parseInt(strIdClient);
 
-				//on récupère la liste des comptes du client
-				
+				// on récupère la liste des comptes du client
+
 				comptes = icc.chercherComptes(idClient);
-				//on récupère le client
+				// on récupère le client
 				client = icc.chercherClient(idClient);
 
-				//on ajoute à la requete
+				// on ajoute à la requete
 				request.setAttribute("comptes", comptes);
 				request.setAttribute("client", client);
 
 				// on forward à la jsp virementCompteACompteComptes
-				request.getRequestDispatcher("/virementCompteACompteComptes.jsp").forward(request, response);
+				request.getRequestDispatcher("/virementCompteACompte.jsp").forward(request, response);
 			}
 
 		}
-		
+
+		else if (action.equals("EffectuerVirementInterne")) {
+
+			// on recupère le parametre
+			String strCompteADebiter = request.getParameter("compteADebiter");
+			String strCompteACrediter = request.getParameter("compteACrediter");
+			String strMontant = request.getParameter("montant");
+
+			int compteADebiter = 0;
+			int compteACrediter = 0;
+			float montant = 0;
+
+			// en cas de saisie incomplete on envoit une erreur
+			if (strCompteADebiter == null || strCompteACrediter == null || strMontant == null
+					|| strCompteADebiter.equals("") || strCompteACrediter.equals("") || strMontant.equals("")) {
+
+				request.setAttribute("msgErreur", "Saisie incomplète");
+
+				// on forward à la jsp erreur
+				request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+
+			}
+
+			else {
+
+				// on essaye de parser les info recuperées et on envoie une
+				// erreur en cas de problème
+				try {
+					
+					montant = Float.parseFloat(strMontant);
+					//arrondi à 2 décimales
+					montant = round(montant, 2);
+					// test de l'arrondis System.out.println(montant);
+					compteADebiter = Integer.parseInt(strCompteADebiter);
+					compteACrediter = Integer.parseInt(strCompteACrediter);
+				} catch (IllegalArgumentException e) {
+
+					e.getStackTrace();
+
+					request.setAttribute("msgErreur", "Saisie incorrecte");
+					// on forward à la jsp erreur
+					request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+				}
+
+				// on verifie que les comptes à débiter et à créditer sont
+				// différents
+				if (compteADebiter == compteACrediter) {
+
+					request.setAttribute("msgErreur",
+							"le compte à débiter et le compte à créditer doivent être différents");
+					// on forward à la jsp erreur
+					request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+				}
+
+				else {
+
+					try {
+						icc.effectuerVirement(compteADebiter, compteACrediter, montant);
+					} catch (SoldeInsuffisantException e) {
+
+						request.setAttribute("msgErreur", e.getMessage());
+						// on forward à la jsp erreur
+						request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+
+					} catch (MontantNegatifException e) {
+
+						request.setAttribute("msgErreur", e.getMessage());
+						// on forward à la jsp erreur
+						request.getRequestDispatcher("/erreur.jsp").forward(request, response);
+					}
+
+					// on forward à la jsp virementCompteACompteComptes
+					request.getRequestDispatcher("/virementCompteACompte.jsp").forward(request, response);
+				}
+			}
+
+		}
+
 		else {
 
 			// dans les autres cas on forward à la jsp index

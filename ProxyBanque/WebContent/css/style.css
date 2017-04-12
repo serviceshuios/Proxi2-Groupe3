@@ -1,60 +1,74 @@
 @CHARSET "UTF-8";
 
+body {
+	background-color: #1ae3ca;
+}
 
 .titre {
 	background-color: blue;
+	color: white;
+}
+
+.connection {
+	background-color: white;
 }
 
 .menu {
-	background-color: yellow;
 	padding-top: 10px;
 }
 
 .content {
-	background-color: pink;
 	padding-top: 10px;
 }
 
 .footer {
-	position:fixed;
+	position: fixed;
 	bottom: 0px;
-	background-color: green;
+	margin: 0;
+	padding-right : 5px;
+	background-color: #0000a0;
 	font-style: italic;
 	color: gray;
+	background-color: #0000a0;
 }
 
-form input{
+form input {
 	width: 300px;
 	height: 20px;
 	padding: 5px 0px 5px 10px;
 }
 
-form label{
+form label {
 	display: inline-block;
 	width: 150px;
 	padding: 5px 0px 5px 10px;
 }
 
-form input[type="submit"]{
+form input[type="submit"] {
 	width: 150px;
 	height: 30px;
 	margin: 5px 0px 50px 50px;
 }
 
-form input[type=radio]{
+form input[type=radio] {
 	height: 20px;
 	width: 50px;
 }
 
-a{
-	
+.montant {
+	width: 100px;
+	height: 20px;
+	padding: 0px 0px 0px 0px;
+}
+
+a {
 	font-weight: bold;
 }
 
-tr{
+tr {
 	border: 1px solid black;
 }
 
-td, th{
+td, th {
 	padding: 0.1em 1em 0.1em 1em;
 }

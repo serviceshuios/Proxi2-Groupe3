@@ -46,7 +46,7 @@
 							<td>${compteCourant.numeroCompte }</td>
 							<td>${compteCourant.solde }€</td>
 							<td>${compteCourant.decouvert }€</td>
-							<td>${compteCourant.date }</td>
+							<td>${compteCourant.dateDouverture }</td>
 						</tr>
 					</table>
 					<br/>
@@ -64,7 +64,7 @@
 							<td>${compteEpargne.numeroCompte }</td>
 							<td>${compteEpargne.solde }€</td>
 							<td>${compteEpargne.tauxRemuneration }%</td>
-							<td>${compteEpargne.date }</td>
+							<td>${compteEpargne.dateDouverture }</td>
 						</tr>
 					</table>
 					<br/>

@@ -34,7 +34,7 @@
 					${ client.nom } :</p>
 				<br />
 
-				<form method="post" action="GestionComptes?action=EffectuerVirement">
+				<form method="post" action="GestionCompte?action=EffectuerVirementInterne">
 				
 
 						<p>Compte à débiter</p>
@@ -73,10 +73,10 @@
 						</table>
 						<br />
 						
-						<label for="montant">Montant à transferer : </label>
-						<input type="text" name="montant" id="montant" /><br />
+						<label for="montant">Montant : </label>
+						<input class="montant" type="text" name="montant" id="montant" /><br />
 						
-						<input type="submit" value="valider" />
+						<input type="submit" value="Valider" />
 
 				</form>
 
