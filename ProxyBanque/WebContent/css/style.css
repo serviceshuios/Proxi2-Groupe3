@@ -1,20 +1,22 @@
 @CHARSET "UTF-8";
 
 body {
-	background-color: #1ae3ca;
+	background-color: #6b6b6b;
 }
 
 .titre {
-	background-color: blue;
+	background-color: #e21005;
 	color: white;
 }
 
 .connection {
-	background-color: white;
+	background-color: black;
+	color: white;
 }
 
 .menu {
 	padding-top: 10px;
+	color: white;
 }
 
 .content {
@@ -25,29 +27,50 @@ body {
 	position: fixed;
 	bottom: 0px;
 	margin: 0;
-	padding-right : 5px;
-	background-color: #0000a0;
+	padding-right: 5px;
+	background-color: black;
 	font-style: italic;
-	color: gray;
-	background-color: #0000a0;
+	color: white;
+	background-color: black;
+}
+
+p {
+	color: white;
+}
+
+img {
+	display : block;
+	margin : auto;
 }
 
 form input {
+	display: inline-block;
 	width: 300px;
-	height: 20px;
-	padding: 5px 0px 5px 10px;
-}
+	height: 25px;
+	padding: 10px 0px 5px 10px;
+	background-color: #ff7575;
+	color: white;
+	}
 
 form label {
 	display: inline-block;
 	width: 150px;
 	padding: 5px 0px 5px 10px;
+	color: white;
+}
+
+form legend {
+	color: white;
 }
 
 form input[type="submit"] {
+	padding : 10px;
 	width: 150px;
 	height: 30px;
-	margin: 5px 0px 50px 50px;
+	margin: auto;
+	background-color: white;
+	color: black;
+	text-align: center;
 }
 
 form input[type=radio] {
@@ -63,10 +86,20 @@ form input[type=radio] {
 
 a {
 	font-weight: bold;
+	color: white;
+}
+
+.ligne {
+	font-weight: normal;
+	color: white;
+}
+
+table {
+	color: white;
 }
 
 tr {
-	border: 1px solid black;
+	border: 1px solid #ff7575;
 }
 
 td, th {

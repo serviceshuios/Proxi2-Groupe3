@@ -51,12 +51,12 @@
 							<td>${ client.prenom }</td>
 							<td>${ client.telephone }</td>
 							<td>${ client.email }</td>
-							<td><a
+							<td><a class="ligne"
 								href=GestionCompte?action=Lister&idClient=${client.idClient}>Liste
 									des comptes</a></td>
-							<td><a
-								href=GestionCompte?action=Virement&idClient=${client.idClient}>Virements</a></td>
-							<td><a
+							<td><a class="ligne"
+								href=GestionCompte?action=Virement&idClient=${client.idClient}>Virement</a></td>
+							<td><a class="ligne"
 								href=GestionClient?action=Editer&idClient=${client.idClient}>Editer</a></td>
 
 						</tr>

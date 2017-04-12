@@ -42,7 +42,7 @@
 
 					<form method="post" action="Authentification?action=authentifier">
 						<fieldset id="section-1">
-							<legend>Authentification</legend>
+							<legend id="aut">Authentification</legend>
 							<label for="login">Login : </label><input type="text"
 								name="login" id="login" /><br /> <label for="mdp">Mot
 								de passe : </label><input type="password" name="mdp" id="mdp" /><br />
