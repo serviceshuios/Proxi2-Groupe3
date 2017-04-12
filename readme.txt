@@ -2,7 +2,7 @@
 Ce document a pour but de vous expliquer les démarches à effectuer afin de pouvoir déployer le fichier ProxyBanque.war 
 en toute simplicité afin de pouvoir l'installer et l'exécuter dans un environnement Windows ayant pour serveur d'application TomCat.
 
-Un fichier Web archive (;war) contient tous les composants d'une application web de manière organisée et hiérarchisée.Il a pour 
+Un fichier Web archive (.war) contient tous les composants d'une application web de manière organisée et hiérarchisée.Il a pour 
 but de déployer l'application web sur l'environnement dans lequel va évoluer l'application.
 
 REMARQUE PRELIMINAIRE :le programme d'installation requiert au moins la version 1.5 du kit de développement (JRE ou JDK) de la plate-forme Java 2 , 
@@ -77,4 +77,4 @@ Etape 6 : utiliser l'application
 => Maintenant votre programme est lancé.
 
 => Pour consulter la documentation (javadoc) de l'application, double-cliquez sur le fichier index.html se trouvant dans le repertoire "doc" 
-livré avec le fichier jar. 
+livré avec le dossier ProxyBanque.  
